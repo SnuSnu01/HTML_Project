@@ -23,21 +23,35 @@
     </header>
     <main class="container">
         <h2>Meine Aufgaben</h2>
-        <form method="post" action="todo.php">
-            <input type="text" name="aufgabe" placeholder="Neue Aufgabe hinzufügen" required>
+        <form id="todoForm">
+            <input type="text" id="taskInput" placeholder="Neue Aufgabe hinzufügen" required>
             <input type="submit" value="Hinzufügen">
         </form>
-        <ul>
-            <?php
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['aufgabe'])) {
-                $aufgabe = htmlspecialchars($_POST['aufgabe']);
-                echo "<li>$aufgabe</li>";
-            }
-            ?>
+        <ul id="taskList">
+            <!-- Hier werden die Aufgaben eingefügt -->
         </ul>
     </main>
     <footer>
         <p>&copy; 2024 Meine Webseite</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const todoForm = document.getElementById('todoForm');
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+
+            todoForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const taskText = taskInput.value.trim();
+                if (taskText !== '') {
+                    const taskItem = document.createElement('li');
+                    taskItem.textContent = taskText;
+                    taskList.appendChild(taskItem);
+                    taskInput.value = '';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
